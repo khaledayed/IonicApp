@@ -1,16 +1,34 @@
-<!--
-  Generated template for the SingleAppareilPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
+
   <ion-navbar>
+    <ion-buttons>
+        <button ion-button clear (click)="dismissModal()">Fermer</button>
+    </ion-buttons>
     <ion-title>{{ name }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <p>Plus d'information pour {{ name }}</p>
-
+  <ion-card [ngClass]="{'is-on': appareil.isOn, 'is-off': !appareil.isOn}">
+  <ion-card-header>{{  appareil.name }}</ion-card-header>
+  <ion-card-content>
+    <p *ngFor="let line of appareil.description"> {{ line }}</p>
+   </ion-card-content>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button full color="danger"
+        [disabled]="!appareil.isOn"
+        (click)="onToggleAppareil()">Eteindre</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button full 
+          color="secondary"
+          [disabled]="appareil.isOn"
+          (click)="onToggleAppareil()">Allumé</button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

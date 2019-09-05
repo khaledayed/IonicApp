@@ -1,12 +1,23 @@
 <ion-header>
         <ion-navbar>
+            <ion-buttons start>
+                <button ion-button ion-only (click)="onToggleMenu()">
+                    <ion-icon name="menu"></ion-icon>
+                 </button>
+            </ion-buttons>
             <ion-title>
-                Réglages
-            </ion-title>
-
+                    Réglages
+                </ion-title>
         </ion-navbar>
-
-</ion-header>
-<ion-content>
-    <p> &nbsp;&nbsp;&nbsp;Ceci est la page des réglages !</p>
-</ion-content>
+    </ion-header>
+    <ion-content>
+        <!--p> &nbsp;&nbsp;&nbsp;Ceci est la page des réglages !</p-->
+        &nbsp;&nbsp;&nbsp;
+            
+        <button ion-button icon-start (click)="onToggleLights()"> 
+                <ion-icon name="power"></ion-icon>
+                Lumiéres
+                
+            
+        </button>
+    </ion-content>
