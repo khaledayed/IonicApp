@@ -1,6 +1,13 @@
 import { Appareil} from '../models/Appareil';
+import { Subject } from 'rxjs/Subject';
+import * as firebase from 'firebase';
+import DataSnapshot = firebase.database.DataSnapshot;
 
 export class AppareilsService{
+
+
+  appareils$ = new Subject<Appareil[]>();
+
     appareilsList: Appareil[] = [
         {
           name: 'Machine à laver',
@@ -37,5 +44,39 @@ export class AppareilsService{
         
   addAppareil(appareil: Appareil){
     this.appareilsList.push(appareil);
+    this.emitAppareils();
   }
+
+  emitAppareils(){
+    this.appareils$.next(this.appareilsList.slice());
+  }
+
+saveData(){
+return new Promise((resolve, reject) =>{
+  firebase.database().ref('appareils').set(this.appareilsList).then(
+    (data: DataSnapshot) => {
+      resolve(data);
+    }
+  ).catch(
+    (error) =>{
+      reject(error);
+    }
+  );
+});
+}
+retrieveData(){
+return new Promise((resolve, reject) => {
+  firebase.database().ref('appareils').once('value').then(
+    (data: DataSnapshot) => {
+      this.appareilsList = data.val();
+      this.emitAppareils();
+      resolve('Données récupérées avec succés !');
+    }
+  ).catch(
+    (error) => {
+      reject(error);
+    }
+  );
+});
+}
 }
